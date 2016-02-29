@@ -1,6 +1,38 @@
 Signupform=React.createClass({
+  mixins:[ReactMeteorData],
+  getMeteorData(){
+  let data={};
+  data.currentUser=Meteor.user();
+  return data;
+  },
+  getInitialState(){
+    return{
+      message:"",
+      messageClass:""
+    }
+  },
+  displayError(message){
+    this.setState({message:message,messageClass:"alert alert-danger registerError"});
+  },
+  handleSubmit(e){
+e.preventDefault();
+this.setState({message:"",messageClass:'hidden'});
+var that=this;
+var first_name=ReactDOM.findDOMNode(this.refs.first_name).value.trim();
+var last_name=ReactDOM.findDOMNode(this.refs.last_name).value.trim();
+var email=ReactDOM.findDOMNode(this.refs.email).value.trim();
+var password=ReactDOM.findDOMNode(this.refs.password).value.trim();
+var user={email:email,password:password,profle:{fullname:(first_name+last_name).toLowerCase(),first_name:first_name,last_name:last_name,avatar:"http://placehold.it/150x150",friends:[]}};
+Accounts.createUser(user,function(e){
+  FlowRouter.go('/dashboard');
+  if(e){
+    that.displayError(e.reason);
+  }
+});
+
+  },
 render(){
-  return(
+   return(
     <div className="row">
       <div className="signup">
         <h1>Sign Up</h1>
@@ -8,7 +40,7 @@ render(){
           It's free and always will be
         </p>
       </div>
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <div className="col-sm-9">
             <div className="row">
               <div className="col-md-6 form-group">
@@ -19,7 +51,8 @@ render(){
               </div>
             </div>
             <div className="form-group">
-              <input className="form-control" ref="emil" name="email" placeholder="Email or mobile number" type="email"/>
+              <input className="form-control" ref="email" name="email" placeholder="Email or mobile number" type="email"/>
+
             </div>
             <div className="form-group">
               <input className="form-control"  placeholder="Re-enter email or mobile number" type="email"/>
@@ -28,7 +61,7 @@ render(){
               <input className="form-control" ref="password" name="password" placeholder="New Password" type="password"/>
             </div>
             <button type="submit" className="btn btn-sucess btn-md">Sign Up</button>
-
+            <span className="this.state.messageClass">{this.state.message}</span>
         </div>
 
     </form>
