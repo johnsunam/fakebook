@@ -8,7 +8,7 @@ Signupform=React.createClass({
   getInitialState(){
     return{
       message:"",
-      messageClass:""
+      messageClass:"hidden"
     }
   },
   displayError(message){
@@ -54,9 +54,7 @@ render(){
               <input className="form-control" ref="email" name="email" placeholder="Email or mobile number" type="email"/>
 
             </div>
-            <div className="form-group">
-              <input className="form-control"  placeholder="Re-enter email or mobile number" type="email"/>
-            </div>
+            
             <div className="form-group">
               <input className="form-control" ref="password" name="password" placeholder="New Password" type="password"/>
             </div>
