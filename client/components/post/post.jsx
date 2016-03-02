@@ -2,15 +2,15 @@ Post=React.createClass({
 
   render(){
     var dimage="";
-    dimage=(
-      <div>
-      <div className="panel-thumbnail">
-      <img src="http://placehold.it/150x150" alt="" className="img-thumbnail img-responsive postimage"/>
-
-      </div>
-
-      </div>
-    )
+    if(this.props.post.imageurl){
+      dimage=(
+        <div>
+        <div className="panel-thumbnail">
+        <img src={this.props.post.imageurl} alt="" className="img-thumbnail img-responsive postimage"/>
+        </div>
+        </div>
+      );
+    }
     return(
       <div className="panel panel-white post col-md-12">
       <div className="post-heading">
@@ -27,7 +27,7 @@ Post=React.createClass({
       </div>
       <div className=" col-md-12 post-description">
       <div className="col-md-12">
-      helo
+    {this.props.post.message}
       <br/>
       </div>
       <div className="col-md-12">

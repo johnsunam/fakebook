@@ -9,8 +9,9 @@ Statusform=React.createClass({
 e.preventDefault();
 var that=this;
 FS.Utility.eachFile(e,function(file){
-  Images.insert(file,function(e,fileobj){
-    that.setState({image:fileobj.id,filename:fileobj.data.blob.name});
+  Images.insert(file,function(err,fileobj){
+    that.setState({image:fileobj._id,filename:fileobj.data.blob.name});
+    alert(this.state.image);
   });
 });
 
@@ -19,6 +20,7 @@ FS.Utility.eachFile(e,function(file){
     e.preventDefault();
     var message=this.refs.sharing.value;
     var imageid=this.refs.imageid.value;
+    alert(imageid);
      if(imageid){
        var image=Images.findOne({_id:imageid});
        var imageurl=image.url();
