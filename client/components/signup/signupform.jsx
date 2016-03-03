@@ -16,17 +16,19 @@ Signupform=React.createClass({
   },
   handleSubmit(e){
 e.preventDefault();
-this.setState({message:"",messageClass:'hidden'});
+//this.setState({message:"",messageClass:'hidden'});
 var that=this;
 var first_name=ReactDOM.findDOMNode(this.refs.first_name).value.trim();
 var last_name=ReactDOM.findDOMNode(this.refs.last_name).value.trim();
 var email=ReactDOM.findDOMNode(this.refs.email).value.trim();
 var password=ReactDOM.findDOMNode(this.refs.password).value.trim();
-var user={email:email,password:password,profle:{fullname:(first_name+last_name).toLowerCase(),first_name:first_name,last_name:last_name,avatar:"http://placehold.it/150x150",friends:[]}};
+var user={email:email,password:password,profile:{fullname:(first_name+last_name).toLowerCase(),first_name:first_name,last_name:last_name,avatar:"http://placehold.it/150x150",friends:[]}};
 Accounts.createUser(user,function(e){
-  FlowRouter.go('/dashboard');
   if(e){
     that.displayError(e.reason);
+  }
+  else{
+    FlowRouter.go('/dashboard');
   }
 });
 
@@ -54,12 +56,12 @@ render(){
               <input className="form-control" ref="email" name="email" placeholder="Email or mobile number" type="email"/>
 
             </div>
-            
+
             <div className="form-group">
               <input className="form-control" ref="password" name="password" placeholder="New Password" type="password"/>
             </div>
             <button type="submit" className="btn btn-sucess btn-md">Sign Up</button>
-            <span className="this.state.messageClass">{this.state.message}</span>
+            <span className={this.state.messageClass}>{this.state.message}</span>
         </div>
 
     </form>

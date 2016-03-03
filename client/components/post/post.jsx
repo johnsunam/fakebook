@@ -1,5 +1,4 @@
 Post=React.createClass({
-
   render(){
     var dimage="";
     if(this.props.post.imageurl){
