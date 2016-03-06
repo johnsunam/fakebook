@@ -29,7 +29,21 @@ Profile=React.createClass({
       });
     });
   },
+  toggleEdit(){
+    this.setState({editmode:!this.state.editmode,email:this.data.currentUser? Meteor.user().emails[0].address:''})
+  },
+  changeEmail(e){
+    e.preventDefault();
+    Meteor.call('changeEmail',e.target.value);
+    this.toggleEdit();
+    this.setState({email:e.target.value});
+  },
   render(){
+    var editmode=<input ref="email" defaultValue={this.state.email} onBlur={this.changeEmail} type="text"/>
+    var emaillink=this.data.currentUser && this.data.currentUser.emails?
+    'mailto:' + this.data.currentUser.emails[0].address:'';
+    var mailblock=!this.state.editmode ? <a href={emaillink}>{this.state.email}</a>:editmode;
+
     return(
       <div className="row">
         <div align="center" className="col-md-2 hidden-xs">
@@ -47,7 +61,8 @@ Profile=React.createClass({
             <table className="table table-user-information">
             <tbody>
             <tr>
-            <td> email</td>
+            <td onClick={this.toggleEdit}>email</td>
+            <td>{mailblock}</td>
             </tr>
             </tbody>
             </table>
